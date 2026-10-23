@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+h1 {
+  width: 100%;
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 36px;
+}
+
+/* Each t-shirt card */
+main > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  max-width: 100%;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+}
+
+img {
+  width: 200px;
+  max-width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+
+p {
+  margin: 12px 0;
+}
+
+/* Price */
+img + p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Purchase controls */
+main > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+select {
+  margin-left: 8px;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font: inherit;
+}
+
+button {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  background-color: #245ac7;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #194395;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid #245ac7;
+  outline-offset: 3px;
+}
+
+/* Out of Stock message */
+main > div > p:last-of-type:not(img + p + p) {
+  color: #b42318;
+  font-weight: bold;
+}
+
+hr {
+  display: none;
+}

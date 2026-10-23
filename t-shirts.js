@@ -29,7 +29,7 @@ const tshirts = [
   },
   {
     title: 'Grey T-Shirt',
-    image: 'blue-t-shirt.jpg',
+    image: 'grey-t-shirt.jpg',
     price: 4.99,
     stock: 2,
     quantity: 1
@@ -62,4 +62,121 @@ const tshirts = [
     stock: 2,
     quantity: 1
   }
-]
+];
+
+function TShirt(props) {
+  const tshirt = props.tshirt;
+  const options = [];
+
+  // Create one option for each available t-shirt.
+  for (let i = 1; i <= tshirt.stock; i++) {
+    options.push(
+      <option key={i} value={i}>
+        {i}
+      </option>
+    );
+  }
+
+  function onChangeHandler(e) {
+    props.onUpdateQuantity(tshirt, parseInt(e.target.value));
+  }
+
+  function clickHandler() {
+    props.onBuy(tshirt);
+  }
+
+  return (
+    <div className="tshirt">
+      <img
+        src={'images/' + tshirt.image}
+        alt={tshirt.title}
+      />
+
+      <h2>{tshirt.title}</h2>
+
+      <p className="price">${tshirt.price}</p>
+
+      <p>Remaining stock: {tshirt.stock}</p>
+
+      {tshirt.stock > 0 ? (
+        <div className="purchase">
+          <label>
+            Quantity:
+            <select
+              value={tshirt.quantity}
+              onChange={onChangeHandler}
+            >
+              {options}
+            </select>
+          </label>
+
+          <button type="button" onClick={clickHandler}>
+            Buy
+          </button>
+        </div>
+      ) : (
+        <p className="out-of-stock">Out of Stock</p>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [shirts, setShirts] = React.useState(tshirts);
+
+  function onUpdateQuantityHandler(tshirt, quantity) {
+    setShirts(function (prevState) {
+      return prevState.map(function (shirt) {
+        if (shirt.title === tshirt.title) {
+          return {
+            ...shirt,
+            quantity: quantity
+          };
+        }
+
+        return shirt;
+      });
+    });
+  }
+
+  function onBuyHandler(tshirt) {
+    setShirts(function (prevState) {
+      return prevState.map(function (shirt) {
+        if (shirt.title === tshirt.title) {
+          if (shirt.quantity > 0 && shirt.quantity <= shirt.stock) {
+            return {
+              ...shirt,
+              stock: shirt.stock - shirt.quantity,
+              quantity: 1
+            };
+          }
+        }
+
+        return shirt;
+      });
+    });
+  }
+
+  return (
+    <main>
+      <h1>T-Shirts</h1>
+
+      <div className="tshirts">
+        {shirts.map(function (tshirt) {
+          return (
+            <TShirt
+              key={tshirt.title}
+              tshirt={tshirt}
+              onUpdateQuantity={onUpdateQuantityHandler}
+              onBuy={onBuyHandler}
+            />
+          );
+        })}
+      </div>
+    </main>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(<App />);
